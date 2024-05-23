@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken"),
   bcrypt = require("bcrypt"),
   slugify = require("slugify"),
-  { JWT_SECRET_KEY } = require("../config");
+  { JWT_SECRET_KEY } = process.env;
 
 module.exports = {
   apiSuccess: (msg, data, extraData = {}) => {
@@ -25,7 +25,7 @@ module.exports = {
 
   createJwt: async (payload) => {
     try {
-      return jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "2h" });
+      return jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "7d" });
     } catch (error) {
       console.log(error);
     }
