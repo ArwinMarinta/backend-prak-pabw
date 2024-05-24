@@ -6,6 +6,6 @@ const express = require("express"),
 
 router.post("/register", validate(schema.register), controller.auth.register);
 router.post("/login", validate(schema.login), controller.auth.login);
-router.patch("/verify", controller.auth.verifyEmail);
+router.patch("/verify/:token", controller.auth.verifyEmail);
 
 module.exports = router;

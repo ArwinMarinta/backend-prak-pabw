@@ -40,7 +40,7 @@ module.exports = {
 
       // Buat token verifikasi
 
-      const link = "http://localhost:3000";
+      const link = `http://localhost:3000/verify/${token}`;
 
       const mailOptions = {
         from: NODEMAILER_EMAIL,
@@ -48,16 +48,14 @@ module.exports = {
         subject: `Reset Password from ${NODEMAILER_EMAIL}`,
         html: `
                 <p>Hello,</p>
-                <p>Request Reset Password</p>
-                <p style="color:black;font-size:25px;letter-spacing:2px;"><strong>click this link</strong></p>
+                <p>Verify Email</p>
+                <p><a href="${link}" style="color:black;font-size:25px;letter-spacing:2px;"><strong>click this link</strong></a></p>
                 <p>It will expire in 5 minutes.</p>
                 <p>Best regards,</p>
                 <p>Team c8</p>
             `,
       };
       await sendEmail(mailOptions);
-
-      // const link =
 
       // Simpan pengguna dengan status verifikasi false dan token verifikasi
       const user = await db.user.create({
@@ -146,7 +144,7 @@ module.exports = {
 
   verifyEmail: async (req, res) => {
     try {
-      const { token } = req.query;
+      const { token } = req.params;
 
       if (!token) return res.status(404), json(utils.apiError("Token Tidak Terdaftar"));
       console.log(token);
